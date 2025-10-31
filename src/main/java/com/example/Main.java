@@ -159,13 +159,13 @@ public class Main {
         List<Question> questions = setupQuestions();
 
         // Initialize the user's score
-        int score = 0;
+        int score = 0,correct=0,incorrect=0;
         int totalQuestions = questions.size();
 
 
-        System.out.println("Welcome to the Java Quiz!");
-        System.out.println("You must answer all " + totalQuestions + " questions. Let's begin!");
-        System.out.println("--------------------------------------------");
+        IO.println("Welcome to the Java Quiz!");
+        IO.println("You must answer all " + totalQuestions + " questions. Let's begin!");
+        IO.println("--------------------------------------------");
 
         // Loop through each question in the list
         // We use an index `i` to show the question number (i + 1)
@@ -173,16 +173,16 @@ public class Main {
             Question currentQuestion = questions.get(i);
 
             // Display the question number and text
-            System.out.println("Question " + (i + 1) + ": " + currentQuestion.getQuestionText());
+            IO.println("Question " + (i + 1) + ": " + currentQuestion.getQuestionText());
 
             // Display the options from the HashMap
             // We iterate over the entrySet to get both key and value
             for (Map.Entry<String, String> entry : currentQuestion.getOptions().entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());
+                IO.println(entry.getKey() + ": " + entry.getValue());
             }
 
             // Prompt the user for their answer
-            System.out.print("Your answer : ");
+            IO.print("Your answer : ");
             String userAnswer = sc.nextLine();
 
             // --- Logic to check the answer ---
@@ -197,24 +197,27 @@ public class Main {
             // Compare the user's formatted answer to the correct answer
            if (formattedUserAnswer.equals(correctAnswer)) {
                 // User is correct
-                System.out.println("Wohoo!! Correct..");
-                score+=2; // Increment the score by 2 for each correct answer
+                IO.println("Wohoo!! Correct..");
+                score+=2;    // Increment the score by 2 for each correct answer
+                correct++;    // Increment the count for each correctly answered question by 1
             } else {
                 // User is incorrect
-                System.out.println("Oopsy!!! The correct option was: " + correctAnswer);
+                incorrect++;      // Increment the count for each incorrectly answered question by 1
+                IO.println("Oopsy!!! The correct option was: " + correctAnswer);
                 // We can also show the correct answer text
-                System.out.println("Correct Answer: " + currentQuestion.getOptions().get(correctAnswer));
+                IO.println("Correct Answer: " + currentQuestion.getOptions().get(correctAnswer));
             }
 
             // Show the user's current score after each question
-            System.out.println("Your current score is: " + score + "/" + ((i + 1)*2));
-            System.out.println("--------------------------------------------");
+            IO.println("Your current score is: " + score + "/" + ((i + 1)*2));
+            IO.println("--------------------------------------------");
         }
 
         // --- End of Quiz ---
         // The loop is finished, so all questions have been answered.
-        System.out.println("Congo!! Quiz completed...");
-        System.out.println("Your final score is: " + score + " out of " + (totalQuestions*2));
+        IO.println("Congo!! Quiz completed...");
+        IO.print("Correct - "+correct+"     |     "+"Incorrect - "+incorrect+"\n");
+        IO.println("Your final score is: " + score + " out of " + (totalQuestions*2));
 
         // Close the scanner to prevent resource leaks
         sc.close();
